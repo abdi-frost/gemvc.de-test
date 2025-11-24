@@ -1,0 +1,25 @@
+{
+    "name": "abdi-frost/gemvc-api-demo",
+    "description": "Mock API endpoints with CRUD operations using GEMVC framework",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Api\\": "app/api/",
+            "App\\Controller\\": "app/controller/",
+            "App\\Model\\": "app/model/",
+            "App\\Table\\": "app/table/",
+            "App\\Database\\": "app/database/",
+            "App\\Http\\": "app/http/",
+            "Gemvc\\": "gemvc/src/",
+            "Gemvc\\Database\\": "gemvc/src/database/",
+            "Gemvc\\Database\\Query\\": "gemvc/src/database/query/",
+            "Gemvc\\Helper\\": "gemvc/src/helper/",
+            "Gemvc\\Http\\": "gemvc/src/http/",
+            "Gemvc\\Core\\": "gemvc/src/core/"
+        }
+    }
+}
