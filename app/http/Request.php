@@ -18,7 +18,14 @@ class Request
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $input = file_get_contents('php://input');
             $data = json_decode($input, true);
-            $this->post = is_array($data) ? $data : [];
+            
+            // Check for JSON errors
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->errors[] = 'Invalid JSON: ' . json_last_error_msg();
+                $this->post = [];
+            } else {
+                $this->post = is_array($data) ? $data : [];
+            }
         }
         
         $this->get = $_GET;
