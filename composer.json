@@ -4,12 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": ">=8.2",
-        "firebase/php-jwt": "^6.8",
-        "symfony/dotenv": "^6.4 || ^7.2"
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^2.1"
+        "php": ">=8.2"
     },
     "autoload": {
         "psr-4": {
@@ -17,6 +12,8 @@
             "App\\Controller\\": "app/controller/",
             "App\\Model\\": "app/model/",
             "App\\Table\\": "app/table/",
+            "App\\Database\\": "app/database/",
+            "App\\Http\\": "app/http/",
             "Gemvc\\": "gemvc/src/",
             "Gemvc\\Database\\": "gemvc/src/database/",
             "Gemvc\\Database\\Query\\": "gemvc/src/database/query/",
@@ -24,7 +21,5 @@
             "Gemvc\\Http\\": "gemvc/src/http/",
             "Gemvc\\Core\\": "gemvc/src/core/"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

@@ -1,0 +1,447 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "GEMVC Mock API",
+    "description": "Mock API endpoints with simple CRUD operations using GEMVC framework",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/Product/create": {
+      "post": {
+        "tags": ["Product"],
+        "summary": "Create a new product",
+        "description": "Creates a new product with the provided information",
+        "operationId": "createProduct",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "price"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Product name",
+                    "example": "Laptop"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Product description",
+                    "example": "High-performance laptop for developers"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Product price",
+                    "example": 999.99
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Product category",
+                    "example": "Electronics"
+                  },
+                  "stock": {
+                    "type": "integer",
+                    "description": "Stock quantity",
+                    "example": 50
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Product/read": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Read a product by ID",
+        "description": "Retrieves a single product by its ID",
+        "operationId": "readProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Product ID",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Product/update": {
+      "post": {
+        "tags": ["Product"],
+        "summary": "Update a product",
+        "description": "Updates an existing product with the provided information",
+        "operationId": "updateProduct",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Product ID",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Product name",
+                    "example": "Updated Laptop"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Product description",
+                    "example": "Updated description"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Product price",
+                    "example": 1199.99
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Product category",
+                    "example": "Electronics"
+                  },
+                  "stock": {
+                    "type": "integer",
+                    "description": "Stock quantity",
+                    "example": 45
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "209": {
+            "description": "Product updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Product/delete": {
+      "post": {
+        "tags": ["Product"],
+        "summary": "Delete a product",
+        "description": "Deletes a product by its ID",
+        "operationId": "deleteProduct",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Product ID",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "210": {
+            "description": "Product deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Product/list": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "List all products",
+        "description": "Retrieves a list of all products with optional filtering and sorting",
+        "operationId": "listProducts",
+        "parameters": [
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "description": "Field to sort by (name, price, category)",
+            "schema": {
+              "type": "string",
+              "example": "name"
+            }
+          },
+          {
+            "name": "find_like",
+            "in": "query",
+            "required": false,
+            "description": "Search filter (e.g., name=Laptop)",
+            "schema": {
+              "type": "string",
+              "example": "name=Laptop"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "description": "Filter by category",
+            "schema": {
+              "type": "string",
+              "example": "Electronics"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Laptop"
+          },
+          "description": {
+            "type": "string",
+            "example": "High-performance laptop for developers"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 999.99
+          },
+          "category": {
+            "type": "string",
+            "example": "Electronics"
+          },
+          "stock": {
+            "type": "integer",
+            "example": 50
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-24T07:00:00Z"
+          }
+        }
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "response_code": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "OK"
+          },
+          "count": {
+            "type": "integer",
+            "example": 1
+          },
+          "service_message": {
+            "type": "string",
+            "example": "Product retrieved successfully"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Product"
+          }
+        }
+      },
+      "ProductListResponse": {
+        "type": "object",
+        "properties": {
+          "response_code": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "OK"
+          },
+          "count": {
+            "type": "integer",
+            "example": 10
+          },
+          "service_message": {
+            "type": "string",
+            "example": "Products retrieved successfully"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "DeleteResponse": {
+        "type": "object",
+        "properties": {
+          "response_code": {
+            "type": "integer",
+            "example": 210
+          },
+          "message": {
+            "type": "string",
+            "example": "deleted"
+          },
+          "count": {
+            "type": "integer",
+            "example": 1
+          },
+          "service_message": {
+            "type": "string",
+            "example": "Product deleted successfully"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "deleted_id": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "response_code": {
+            "type": "integer",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad Request"
+          },
+          "service_message": {
+            "type": "string",
+            "example": "Validation error"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Product",
+      "description": "Product management operations"
+    }
+  ]
+}
